@@ -10,7 +10,7 @@ class TaskRoom extends Model
     use HasFactory;
 
     public function users(){
-        return $this->belongsToMany(User::class,'room_user','user_id','room_id');
+        return $this->belongsToMany(User::class,'room_user','room_id','user_id');
     }
 
 }

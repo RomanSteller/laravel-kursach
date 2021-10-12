@@ -19,7 +19,7 @@ class User extends Authenticatable
      */
 
     public function rooms(){
-        return $this->belongsToMany(TaskRoom::class,'room_user','room_id','user_id');
+        return $this->belongsToMany(TaskRoom::class,'room_user','user_id','room_id');
     }
 
 
@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'login'
     ];
 
     /**
