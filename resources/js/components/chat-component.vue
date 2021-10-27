@@ -3,12 +3,12 @@
         <hr>
         <div class="row">
             <div class="col-sm-12">
-                <div class="chat w-100" id="chat">
+                <div class="chat w-100" id="chat" style="display: flex;flex-direction: column-reverse">
+                    <div  v-for="message in messages" :key="message">
+                        <p class="left w-100">{{ message }}</p>
+                    </div>
                     <div v-for="message in serverMessages" :key="message">
                         <p class="right w-100">{{ message }}</p>
-                    </div>
-                    <div v-for="message in messages" :key="message">
-                        <p class="left w-100">{{ message }}</p>
                     </div>
                 </div>
                 <hr>
