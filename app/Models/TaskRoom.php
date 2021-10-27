@@ -13,4 +13,8 @@ class TaskRoom extends Model
         return $this->belongsToMany(User::class,'room_user','room_id','user_id');
     }
 
+    public function tasks(){
+        return $this->hasMany(TaskRoom::class);
+    }
+
 }

@@ -9,7 +9,16 @@ class Task extends Model
 {
     use HasFactory;
 
+    /**
+     * @var mixed
+     */
+
+
     public function status(){
         return $this->belongsTo(Status::class);
+    }
+
+    public function room(){
+        return $this->belongsTo(TaskRoom::class);
     }
 }

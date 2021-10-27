@@ -16,6 +16,7 @@ class CreateTaskRoomsTable extends Migration
         Schema::create('task_rooms', function (Blueprint $table) {
             $table->id();
             $table->string('room_name');
+            $table->string('subject');
             $table->bigInteger('owner_id');
             $table->timestamps();
         });

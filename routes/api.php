@@ -1,7 +1,10 @@
 <?php
 
+
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +29,16 @@ Route::get('/all-tasks',[\App\Http\Controllers\api\v1\StartController::class,'fe
 Route::get('/all-status',[\App\Http\Controllers\api\v1\StartController::class,'fetchStatus']);
 Route::post('/change-status',[\App\Http\Controllers\api\v1\StartController::class,'updateTask']);
 Route::post('/my-rooms',[\App\Http\Controllers\api\v1\StartController::class,'getRoomsForId']);
+Route::post('/my-rooms/create',[\App\Http\Controllers\api\v1\StartController::class,'newTaskRoom']);
+Route::post('/tasks/{id}',[\App\Http\Controllers\api\v1\StartController::class,'getTaskForRoom']);
+Route::post('/create-task',[\App\Http\Controllers\api\v1\StartController::class,'createNewTask']);
+Route::get('/getUsers',[\App\Http\Controllers\api\v1\StartController::class,'getUsers']);
+Route::post('/getUser/',[\App\Http\Controllers\api\v1\StartController::class,'getUserForId']);
+
+
+Route::post('message',[\App\Http\Controllers\EventChatController::class,'index']);
+
+
 
 //Auth
 Route::prefix('sanctum')->namespace('api')->group(function() {
