@@ -31,12 +31,11 @@ export default {
             textAuthor: '',
             user: this.$store.getters.setUser,
             userId: '',
-            serverUserId:'',
+            serverUserId: '',
             serverMessages: []
         }
     },
     mounted() {
-
         window.Echo.channel('channel.' + this.roomId)
             .listen('ChatMessage', (e) => {
                 this.serverMessages.push(e.data.user.name + ' ' + e.data.text);
@@ -67,15 +66,15 @@ export default {
     overflow: auto;
 }
 
-.left{
+.left {
     text-align: left;
-    background: rgba(170,230,154,.5);
+    background: rgba(170, 230, 154, .5);
     padding: 5px 10px;
 }
 
-.right{
+.right {
     text-align: right;
-    background: rgba(79,196,219,.5);
+    background: rgba(79, 196, 219, .5);
     padding: 5px 10px;
 }
 

@@ -25829,7 +25829,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.chat[data-v-68a5605a] {\n    width: 150px;\n    height: 150px;\n    border: 1px solid #ced4da;\n    border-radius: 5px;\n    overflow: auto;\n}\n.left[data-v-68a5605a]{\n    text-align: left;\n    background: rgba(170,230,154,.5);\n    padding: 5px 10px;\n}\n.right[data-v-68a5605a]{\n    text-align: right;\n    background: rgba(79,196,219,.5);\n    padding: 5px 10px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.chat[data-v-68a5605a] {\n    width: 150px;\n    height: 150px;\n    border: 1px solid #ced4da;\n    border-radius: 5px;\n    overflow: auto;\n}\n.left[data-v-68a5605a] {\n    text-align: left;\n    background: rgba(170, 230, 154, .5);\n    padding: 5px 10px;\n}\n.right[data-v-68a5605a] {\n    text-align: right;\n    background: rgba(79, 196, 219, .5);\n    padding: 5px 10px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
