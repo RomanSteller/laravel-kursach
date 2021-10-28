@@ -3,12 +3,13 @@
         <hr>
         <div class="row">
             <div class="col-sm-12">
-                <div class="chat w-100" id="chat" style="display: flex;flex-direction: column-reverse">
-                    <div  v-for="message in messages" :key="message">
-                        <p class="left w-100">{{ message }}</p>
-                    </div>
-                    <div v-for="message in serverMessages" :key="message">
-                        <p class="right w-100">{{ message }}</p>
+                <div class="chat w-100" id="chat">
+                    <div v-for="message in messages" :key="message">
+                        <p :class="{'left':message[0] === this.$store.getters.setUser.id, 'right': message[0] !== this.$store.getters.setUser.id }">
+                            {{
+                                message[0] === this.$store.getters.setUser.id ? 'Вы ' + message[2] : message[1] + ' ' + message[2]
+                            }}
+                        </p>
                     </div>
                 </div>
                 <hr>
@@ -19,8 +20,6 @@
 </template>
 
 <script>
-
-
 export default {
     name: "chat",
     props: ['roomId'],
@@ -28,18 +27,16 @@ export default {
         return {
             messages: [],
             textMessage: '',
-            textAuthor: '',
             user: this.$store.getters.setUser,
-            userId: '',
-            serverUserId: '',
-            serverMessages: []
+            authorUserId: null
         }
     },
     mounted() {
         window.Echo.channel('channel.' + this.roomId)
             .listen('ChatMessage', (e) => {
-                this.serverMessages.push(e.data.user.name + ' ' + e.data.text);
-                this.serverUserId = e.data.user.id;
+                this.messages.push([e.data.user.id, e.data.user.login, e.data.text])
+                this.authorUserId = e.data.user.id;
+                console.log(this.messages);
             })
     },
     methods: {
@@ -50,8 +47,8 @@ export default {
                 user: this.user
             }).then(res => {
             });
-            this.messages.push('Вы ' + this.textMessage);
-            this.textMessage = '';
+            this.textMessage = ""
+
         }
     }
 }
@@ -60,10 +57,11 @@ export default {
 <style scoped>
 .chat {
     width: 150px;
-    height: 150px;
+    height: 300px;
     border: 1px solid #ced4da;
     border-radius: 5px;
     overflow: auto;
+    font-size: 30px;
 }
 
 .left {
