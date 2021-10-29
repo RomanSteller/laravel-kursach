@@ -27,13 +27,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //Tasks
 Route::get('/all-tasks',[\App\Http\Controllers\api\v1\StartController::class,'fetchTasks']);
 Route::get('/all-status',[\App\Http\Controllers\api\v1\StartController::class,'fetchStatus']);
+Route::get('/all-messages',[\App\Http\Controllers\api\v1\StartController::class,'getMessages']);
 Route::post('/change-status',[\App\Http\Controllers\api\v1\StartController::class,'updateTask']);
 Route::post('/my-rooms',[\App\Http\Controllers\api\v1\StartController::class,'getRoomsForId']);
 Route::post('/my-rooms/create',[\App\Http\Controllers\api\v1\StartController::class,'newTaskRoom']);
 Route::post('/tasks/{id}',[\App\Http\Controllers\api\v1\StartController::class,'getTaskForRoom']);
 Route::post('/create-task',[\App\Http\Controllers\api\v1\StartController::class,'createNewTask']);
 Route::get('/getUsers',[\App\Http\Controllers\api\v1\StartController::class,'getUsers']);
-Route::post('/getUser/',[\App\Http\Controllers\api\v1\StartController::class,'getUserForId']);
+Route::post('/getUser',[\App\Http\Controllers\api\v1\StartController::class,'getUserForId']);
 
 
 Route::post('message',[\App\Http\Controllers\EventChatController::class,'index']);

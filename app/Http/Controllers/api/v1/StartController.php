@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use App\Models\Status;
 use App\Models\Task;
 use App\Models\TaskRoom;
@@ -19,6 +20,10 @@ class StartController extends Controller
         ])->setStatusCode(201);
     }
 
+    public function getMessages(){
+        $messages = Chat::with('users')->get();
+        return response()->json($messages);
+    }
 
     public function getTaskForRoom($id){
         $taskArray = [];

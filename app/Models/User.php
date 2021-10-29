@@ -22,6 +22,12 @@ class User extends Authenticatable
         return $this->belongsToMany(TaskRoom::class,'room_user','user_id','room_id');
     }
 
+    //TODO Трахнуть диму еркина
+
+    public function chat(){
+        return $this->hasMany(Chat::class);
+    }
+
 
     protected $fillable = [
         'name',
