@@ -20,8 +20,8 @@ class StartController extends Controller
         ])->setStatusCode(201);
     }
 
-    public function getMessages(){
-        $messages = Chat::with('users')->get();
+    public function getMessages($roomId){
+        $messages = Chat::with('users')->where('room_id',$roomId)->get();
         return response()->json($messages);
     }
 

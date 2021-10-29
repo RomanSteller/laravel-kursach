@@ -19644,7 +19644,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return axios.get('/api/all-messages/').then(function (res) {
+              return axios.get('/api/all-messages/' + _this.roomId).then(function (res) {
                 _this.renderMessages = res.data;
               });
 

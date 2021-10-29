@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //Tasks
 Route::get('/all-tasks',[\App\Http\Controllers\api\v1\StartController::class,'fetchTasks']);
 Route::get('/all-status',[\App\Http\Controllers\api\v1\StartController::class,'fetchStatus']);
-Route::get('/all-messages',[\App\Http\Controllers\api\v1\StartController::class,'getMessages']);
+Route::get('/all-messages/{roomId}',[\App\Http\Controllers\api\v1\StartController::class,'getMessages']);
 Route::post('/change-status',[\App\Http\Controllers\api\v1\StartController::class,'updateTask']);
 Route::post('/my-rooms',[\App\Http\Controllers\api\v1\StartController::class,'getRoomsForId']);
 Route::post('/my-rooms/create',[\App\Http\Controllers\api\v1\StartController::class,'newTaskRoom']);

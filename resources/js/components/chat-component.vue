@@ -38,7 +38,7 @@ export default {
         }
     },
     async mounted() {
-        await axios.get('/api/all-messages/')
+        await axios.get('/api/all-messages/'+this.roomId)
             .then(res=>{
                 this.renderMessages = res.data
             });
