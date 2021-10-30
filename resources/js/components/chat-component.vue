@@ -5,7 +5,7 @@
             <serverRender :messages="this.renderMessages"></serverRender>
             <pusherRender :messages="this.messages"></pusherRender>
         </div>
-        <div class="chat-footer">
+        <div class="chat-footer w-100">
             <textarea class="send-message-text" style="resize: none;font-size: 18px" v-model="textMessage" @keyup.enter="sendMessage"></textarea>
             <label class="upload-file">
                 <input type="file" required=""> <i class="fa fa-paperclip"></i> </label>

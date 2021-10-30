@@ -12,7 +12,7 @@
         <tr>
           <th scope="row">{{room.id}}</th>
           <td>{{ room.name }}</td>
-          <td><router-link :to="{name:'room',params:{id:room.id}}" class="btn btn-success">Перейти в комнату</router-link></td>
+          <td><router-link :to="{name:'room',params:{id: room.id}}" class="btn btn-success">Перейти в комнату</router-link></td>
         </tr>
       </tbody>
     </table>

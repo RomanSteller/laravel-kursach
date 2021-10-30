@@ -1,17 +1,20 @@
 <template>
     <div v-if="!load" class="spinner-border" role="status"></div>
     <div v-else class="container-fluid">
-
-        <div v-if="this.$route.name === 'room'">
-            <router-link :to="{name:'new-task',params:{'userId':userId,roomId:roomId}}" class="btn btn-outline-success m-5">Создать новую задачу</router-link>
-        </div>
-        <div v-else-if="this.$route.name === 'new-task'">
-            <a href="" class="btn btn-outline-success m-5" @click.prevent="this.$router.go(-1)">Обратно</a>
-        </div>
-
-        <router-view></router-view>
         <div v-if="user" class="d-flex justify-content-between">
             <main class="content w-75">
+                <div>
+                    <div v-if="this.$route.name === 'room'">
+                        <router-link :to="{name:'new-task',params:{'userId':userId,roomId:roomId}}"
+                                     class="btn btn-outline-success mt-1 mb-2">Создать новую задачу
+                        </router-link>
+                    </div>
+                    <div v-else-if="this.$route.name === 'new-task'">
+                        <a href="" class="btn btn-outline-success m-1" @click.prevent="this.$router.go(-1)">Обратно</a>
+                    </div>
+                </div>
+                <hr>
+                <router-view></router-view>
                 <div class="container-fluid p-0">
                     <div class="row">
                         <div class="col-12 col-lg-6 col-xl-3"
@@ -24,20 +27,21 @@
                                 <div class="card-header">
                                     <h5 class="card-title">{{ status.status_name }}</h5>
                                 </div>
-                                <div class="card-body p-3">
-                                    <div class="card mb-3 bg-light"
+                                <div class="card-body p-3 ">
+                                    <div
                                          v-for="post in posts.filter(x => x.status_id === status.id)"
                                          @dragstart="onDragStart($event, post)"
-                                         :class="{'my_class': post.executor_id === userId}"
+                                         :class="[post.executor_id === userId ? 'main' : 'rogue']"
                                          :key="post.id"
                                          draggable="true"
                                     >
-                                        <div class="card-body p-3">
-                                            <p>{{ post.description }}</p>
+                                        <div class="card-body p-3 main">
+                                            <p>{{ post.description + ' ' + post.executor_id + ' ' + userId}}</p>
+                                            <p>{{  post.executor_id === userId}}</p>
                                             <div class="float-right mt-n1"><img
                                                 src="https://bootdey.com/img/Content/avatar/avatar6.png" width="32"
                                                 height="32" class="rounded-circle" alt="Avatar"></div>
-                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -46,10 +50,12 @@
                 </div>
 
             </main>
-            <div class="w-25">
-                <button type="button" class="btn btn-primary" @click="this.chatOn=!this.chatOn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat" viewBox="0 0 16 16">
-                        <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"></path>
+            <div>
+                <button type="button" class="btn btn-primary mt-2" @click="this.chatOn=!this.chatOn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-chat" viewBox="0 0 16 16">
+                        <path
+                            d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"></path>
                     </svg>
                 </button>
                 <chat v-if="this.chatOn" :roomId="roomId"></chat>
@@ -80,10 +86,10 @@ export default defineComponent({
         chat,
         rightPanel
     },
-    data(){
-      return{
-          chatOn:false
-      }
+    data() {
+        return {
+            chatOn: false
+        }
     },
     setup({root}) {
         const posts = ref(),
@@ -106,10 +112,8 @@ export default defineComponent({
                 console.log(res.data)
                 user.value = res.data[0];
                 userId.value = user.value.id;
-                load.value = false
             }).catch(err => {
                 console.log(err)
-                load.value = false
             });
 
             const res = await axios.post('api/tasks/' + roomId),
@@ -118,8 +122,9 @@ export default defineComponent({
 
             posts.value = res.data[0];
             statuses.value = res1.data[0];
-
+            console.log("САСАТ" + userId.value);
             load.value = true;
+
         });
 
         function onDragStart(e, item) {
@@ -201,6 +206,14 @@ export default defineComponent({
 body {
     margin-top: 20px;
     background: #fafafa
+}
+
+.main {
+    background-color: #a5ebc2;
+}
+
+.rogue{
+    background-color: #adb5bd;
 }
 
 .card {
