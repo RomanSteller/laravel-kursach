@@ -1,7 +1,7 @@
 <template>
   <form action="" class="w-25 m-auto">
-    <h2>Создать задача</h2>
-    <input type="text" class="form-control mt-2" placeholder="Название задачи" v-model="taskName">
+    <h2>Создать задачу</h2>
+    <input type="text" class="form-control mt-5" placeholder="Название задачи" v-model="taskName">
     <input type="text" class="form-control mt-2" placeholder="Описание задачи" v-model="taskDescription">
     <input type="text" class="form-control mt-2" placeholder="Выполняющий" v-model="keyword">
     <ul v-if="users.length > 0 && listUser" class="list-group mt-3">

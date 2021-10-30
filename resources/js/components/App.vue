@@ -1,7 +1,7 @@
 <template>
     <div>
         <HeaderComponent :user=this.$store.state.user></HeaderComponent>
-        <div class="container">
+        <div class="container-fluid">
             <router-view/>
         </div>
     </div>
@@ -87,6 +87,10 @@ main {
 #nav a.router-link-exact-active {
     color: #42b983;
 
+}
+
+body{
+    background-color: aliceblue;
 }
 
 #nav a.router-link-exact-active.home {

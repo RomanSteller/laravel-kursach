@@ -1,70 +1,39 @@
 <template>
-
-    <div class="message-chat mt-3">
-        <div class="chat-body">
-            <serverRender :messages="this.renderMessages"></serverRender>
-            <pusherRender :messages="this.messages"></pusherRender>
+    <div v-for="message in messages" :key="message">
+        <div v-if="message[0] === this.$store.getters.setUser.id" class="message my-message">
+            <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+            <div class="message-body">
+                <div class="message-info"><h4> Вы</h4><h5><i class="fa fa-clock-o"></i> 3:45 PM</h5>
+                </div>
+                <hr>
+                <div class="message-text"> {{ message[2] }}</div>
+            </div>
+            <br>
         </div>
-        <div class="chat-footer">
-            <textarea class="send-message-text" style="resize: none;font-size: 18px" v-model="textMessage" @keyup.enter="sendMessage"></textarea>
-            <label class="upload-file">
-                <input type="file" required=""> <i class="fa fa-paperclip"></i> </label>
-            <button type="button" @click="sendMessage" class="send-message-button btn-info"><i class="fa fa-send"></i></button>
+        <div v-else-if="message[0] !== this.$store.getters.setUser.id" class="message info ">
+            <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+            <div class="message-body">
+                <div class="message-body-inner">
+                    <div class="message-info"><h4> {{message[1]}}</h4></div>
+                    <hr>
+                    <div class="message-text">
+                        {{ message[2] }}
+                    </div>
+                </div>
+            </div>
+            <br>
         </div>
     </div>
-
 </template>
 
 <script>
-import serverRender from './Chats/renderFromServer-component'
-import pusherRender from './Chats/renderFromPusher-component'
-import axios from "axios";
 export default {
-    name: "chat",
-    props: ['roomId'],
-    components:{
-        serverRender,
-        pusherRender
-    },
-    data() {
-        return {
-            messages: [],
-            textMessage: '',
-            user: this.$store.getters.setUser,
-            authorUserId: null,
-            renderMessages: null,
-        }
-    },
-    async beforeMount() {
-        const res = await axios.get('/api/all-messages/' + this.roomId);
-        this.renderMessages = res.data
-    },
-    async mounted() {
-        window.Echo.channel('channel.' + this.roomId)
-            .listen('ChatMessage', (e) => {
-                this.messages.push([e.data.user.id, e.data.user.login, e.data.text])
-                this.authorUserId = e.data.user.id;
-                console.log(this.messages);
-            });
-    },
-    methods: {
-        sendMessage() {
-            axios.post('api/message', {
-                text: this.textMessage,
-                roomId: this.roomId,
-                user: this.user,
-                userId: this.$store.getters.setUser.id
-            }).then(res => {
-            });
-            this.textMessage = ""
-
-        }
-    }
+    name: "renderFromPusher-component",
+    props:['messages'],
 }
 </script>
 
 <style scoped>
-
 body {
     margin-top: 20px;
     background: #eee;
@@ -521,6 +490,7 @@ body {
 }
 
 .message-chat {
+    width: 100%;
     overflow: hidden;
 }
 
