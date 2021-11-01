@@ -29,15 +29,13 @@
                                 </div>
                                 <div class="card-body p-3 ">
                                     <div
-                                         v-for="post in posts.filter(x => x.status_id === status.id)"
-                                         @dragstart="onDragStart($event, post)"
-                                         :class="[post.executor_id === userId ? 'main' : 'rogue']"
-                                         :key="post.id"
+                                         v-for="task in tasks.filter(x => x.status_id === status.id)"
+                                         @dragstart="onDragStart($event, task)"
+                                         :key="task .id"
                                          draggable="true"
                                     >
-                                        <div class="card-body p-3 main">
-                                            <p>{{ post.description + ' ' + post.executor_id + ' ' + userId}}</p>
-                                            <p>{{  post.executor_id === userId}}</p>
+                                        <div :class="[task.executor_id === userId ? 'card-body p-3 bg-primary' : 'card-body p-3 bg-light']">
+                                            <p>{{ post.description}}</p>
                                             <div class="float-right mt-n1"><img
                                                 src="https://bootdey.com/img/Content/avatar/avatar6.png" width="32"
                                                 height="32" class="rounded-circle" alt="Avatar"></div>
@@ -71,7 +69,7 @@
 </template>
 <script>
 
-import {ref, defineComponent, onBeforeMount, computed} from 'vue';
+import {ref, defineComponent, onBeforeMount, computed,inject} from 'vue';
 import axios from 'axios'
 
 import loader from './loader-component'
@@ -92,39 +90,24 @@ export default defineComponent({
         }
     },
     setup({root}) {
-        const posts = ref(),
+        const tasks = ref(),
+            stateUser = inject('store'),
             statuses = ref(),
-            user = ref(),
+            user = ref(stateUser.getters.setUser),
             route = useRoute(),
             roomId = route.params.id,
             load = ref(false),
-            userId = ref(),
-            stateUser = computed(() => root.$store.getters.setUser)
+            userId = ref(stateUser.getters.setUser.id)
+
 
         onBeforeMount(async () => {
-            console.log(stateUser);
-
-            await axios.get('/api/user', {
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            }).then(res => {
-                console.log(res.data)
-                user.value = res.data[0];
-                userId.value = user.value.id;
-            }).catch(err => {
-                console.log(err)
-            });
-
             const res = await axios.post('api/tasks/' + roomId),
                 res1 = await axios.get('/api/all-status');
 
-
-            posts.value = res.data[0];
+            tasks.value = res.data[0];
             statuses.value = res1.data[0];
-            console.log("САСАТ" + userId.value);
-            load.value = true;
 
+            load.value = true;
         });
 
         function onDragStart(e, item) {
@@ -135,7 +118,7 @@ export default defineComponent({
 
         function onDrop(e, statusId) {
             const itemId = parseInt(e.dataTransfer.getData('itemId'))
-            posts.value = posts.value.map(x => {
+            tasks.value = tasks.value.map(x => {
 
                 if (x.executor_id !== userId.value) return x;
                 if (x.id === itemId) {
@@ -153,7 +136,7 @@ export default defineComponent({
 
         return {
             statuses,
-            posts,
+            tasks,
             user,
             onDragStart,
             onDrop,
@@ -208,13 +191,16 @@ body {
     background: #fafafa
 }
 
-.main {
-    background-color: #a5ebc2;
+.card-body.p-3.bg-light{
+    border: 1px solid ghostwhite;
+    margin-top: 3px;
 }
 
-.rogue{
-    background-color: #adb5bd;
+.card-body.p-3.bg-primary{
+    color:white;
+    margin-top: 3px;
 }
+
 
 .card {
     margin-bottom: 1.5rem;

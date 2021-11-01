@@ -20069,52 +20069,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   setup: function setup(_ref) {
     var root = _ref.root;
     var posts = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(),
+        stateUser = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)('store'),
         statuses = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(),
-        user = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(),
+        user = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(stateUser.getters.setUser),
         route = (0,vue_router__WEBPACK_IMPORTED_MODULE_6__.useRoute)(),
         roomId = route.params.id,
         load = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(false),
-        userId = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(),
-        stateUser = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
-      return root.$store.getters.setUser;
-    });
+        userId = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(stateUser.getters.setUser.id);
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.onBeforeMount)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
       var res, res1;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              console.log(stateUser);
-              _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/user', {
-                headers: {
-                  'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-              }).then(function (res) {
-                console.log(res.data);
-                user.value = res.data[0];
-                userId.value = user.value.id;
-              })["catch"](function (err) {
-                console.log(err);
-              });
-
-            case 3:
-              _context.next = 5;
+              _context.next = 2;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().post('api/tasks/' + roomId);
 
-            case 5:
+            case 2:
               res = _context.sent;
-              _context.next = 8;
+              _context.next = 5;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/all-status');
 
-            case 8:
+            case 5:
               res1 = _context.sent;
               posts.value = res.data[0];
               statuses.value = res1.data[0];
               console.log("САСАТ" + userId.value);
               load.value = true;
 
-            case 13:
+            case 10:
             case "end":
               return _context.stop();
           }
@@ -21070,13 +21053,13 @@ var _withScopeId = function _withScopeId(n) {
 };
 
 var _hoisted_1 = {
-  "class": "form-signin"
+  "class": "form-signin mt-5"
 };
 
 var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
     "class": "h3 mb-3 font-weight-normal"
-  }, "Авторизация", -1
+  }, "Регистрация", -1
   /* HOISTED */
   );
 });
@@ -21255,11 +21238,8 @@ var _hoisted_15 = {
   "class": "card-body p-3"
 };
 var _hoisted_16 = ["onDragstart"];
-var _hoisted_17 = {
-  "class": "card-body p-3 main"
-};
 
-var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "float-right mt-n1"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
@@ -21273,7 +21253,7 @@ var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     width: "16",
@@ -21288,19 +21268,19 @@ var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_20 = [_hoisted_19];
-var _hoisted_21 = {
+var _hoisted_19 = [_hoisted_18];
+var _hoisted_20 = {
   key: 1,
   "class": "w-100"
 };
 
-var _hoisted_22 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_21 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", null, "Вы не авторизированны", -1
   /* HOISTED */
   );
 });
 
-var _hoisted_23 = [_hoisted_22];
+var _hoisted_22 = [_hoisted_21];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
 
@@ -21352,15 +21332,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onDragstart: function onDragstart($event) {
           return _ctx.onDragStart($event, post);
         },
-        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([post.executor_id === _ctx.userId ? 'main' : 'rogue']),
         key: post.id,
         draggable: "true"
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(post.description + ' ' + post.executor_id + ' ' + _ctx.userId), 1
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([post.executor_id === _ctx.userId ? 'card-body p-3 bg-primary' : 'card-body p-3 bg-light'])
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(post.description), 1
       /* TEXT */
-      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(post.executor_id === _ctx.userId), 1
-      /* TEXT */
-      ), _hoisted_18])], 42
-      /* CLASS, PROPS, HYDRATE_EVENTS */
+      ), _hoisted_17], 2
+      /* CLASS */
+      )], 40
+      /* PROPS, HYDRATE_EVENTS */
       , _hoisted_16);
     }), 128
     /* KEYED_FRAGMENT */
@@ -21375,12 +21356,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[3] || (_cache[3] = function ($event) {
       return _this.chatOn = !_this.chatOn;
     })
-  }, _hoisted_20), this.chatOn ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_chat, {
+  }, _hoisted_19), this.chatOn ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_chat, {
     key: 0,
     roomId: _ctx.roomId
   }, null, 8
   /* PROPS */
-  , ["roomId"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : !_ctx.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, _hoisted_23)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]));
+  , ["roomId"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : !_ctx.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_20, _hoisted_22)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]));
 }
 
 /***/ }),
@@ -26501,7 +26482,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.form-group[data-v-79a34b44] {\r\n  display: flex;\r\n  flex-direction: column;\r\n  text-align: left;\n}\n.form-group label[data-v-79a34b44] {\r\n  font-size: 15px;\r\n  font-weight: bold;\n}\nform[data-v-79a34b44] {\r\n  font-family: 'Noto Sans', sans-serif;\r\n  margin: 30px auto;\r\n  max-width: 400px;\r\n  background: #ffffff;\r\n  color: #2c3e50;\r\n  font-weight: bolder;\r\n  border-radius: 10px;\r\n  padding: 10px 30px;\n}\n.form-group input[data-v-79a34b44], button[data-v-79a34b44], a[data-v-79a34b44] {\r\n  margin-top: 10px;\r\n  margin-bottom: 10px;\r\n  padding: 5px 5px;\r\n  border-radius: 0;\r\n  border: 1px solid gainsboro;\n}\n.form-group input[data-v-79a34b44] {\r\n  border-radius: 0;\r\n  border: 1px solid gainsboro;\r\n  outline: none;\r\n  font-size: 20px;\n}\n.form-group a[data-v-79a34b44] {\r\n  font-size: 16px;\r\n  background: #0086b3;\r\n  color: white;\r\n  border-radius: 5px;\r\n  font-weight: lighter;\r\n  border: none;\r\n  padding-top: 10px;\r\n  padding-bottom: 10px;\r\n  text-align: center;\n}\r\n\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.form-group[data-v-79a34b44] {\n  display: flex;\n  flex-direction: column;\n  text-align: left;\n}\n.form-group label[data-v-79a34b44] {\n  font-size: 15px;\n  font-weight: bold;\n}\nform[data-v-79a34b44] {\n  font-family: 'Noto Sans', sans-serif;\n  margin: 30px auto;\n  max-width: 400px;\n  background: #ffffff;\n  color: #2c3e50;\n  font-weight: bolder;\n  border-radius: 10px;\n  padding: 10px 30px;\n}\n.form-group input[data-v-79a34b44], button[data-v-79a34b44], a[data-v-79a34b44] {\n  margin-top: 10px;\n  margin-bottom: 10px;\n  padding: 5px 5px;\n  border-radius: 0;\n  border: 1px solid gainsboro;\n}\n.form-group input[data-v-79a34b44] {\n  border-radius: 0;\n  border: 1px solid gainsboro;\n  outline: none;\n  font-size: 20px;\n}\n.form-group a[data-v-79a34b44] {\n  font-size: 16px;\n  background: #0086b3;\n  color: white;\n  border-radius: 5px;\n  font-weight: lighter;\n  border: none;\n  padding-top: 10px;\n  padding-bottom: 10px;\n  text-align: center;\n}\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -26549,7 +26530,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n/*.table {*/\n/*    display: grid;*/\n/*    grid-template-columns: 1fr 1fr 1fr 1fr;*/\n/*    gap: 10px;*/\n/*}*/\n\n/*.droppable {*/\n/*    padding: 15px;*/\n/*    border-radius: 10px;*/\n/*    background: #2c3e50;*/\n/*    margin-bottom: 10px;*/\n/*    min-height: 300px;*/\n/*}*/\n\n/*.droppable h4 {*/\n/*    color: white;*/\n/*}*/\n\n/*.draggable {*/\n/*    background: white;*/\n/*    padding: 5px;*/\n/*    border-radius: 5px;*/\n/*    margin-bottom: 5px;*/\n/*    margin-top: 10px;*/\n/*}*/\n\n/*.my_class {*/\n/*    background-color: aqua;*/\n/*}*/\n\n/*.draggable h5 {*/\n/*    margin: 0;*/\n/*}*/\nbody[data-v-ade0f17a] {\n    margin-top: 20px;\n    background: #fafafa\n}\n.main[data-v-ade0f17a] {\n    background-color: #a5ebc2;\n}\n.rogue[data-v-ade0f17a]{\n    background-color: #adb5bd;\n}\n.card[data-v-ade0f17a] {\n    margin-bottom: 1.5rem;\n    box-shadow: 0 .25rem .5rem rgba(0, 0, 0, .025)\n}\n.card-border-primary[data-v-ade0f17a] {\n    border-top: 4px solid #2979ff\n}\n.card-border-secondary[data-v-ade0f17a] {\n    border-top: 4px solid #efefef\n}\n.card-border-success[data-v-ade0f17a] {\n    border-top: 4px solid #00c853\n}\n.card-border-info[data-v-ade0f17a] {\n    border-top: 4px solid #3d5afe\n}\n.card-border-warning[data-v-ade0f17a] {\n    border-top: 4px solid #ff9100\n}\n.card-border-danger[data-v-ade0f17a] {\n    border-top: 4px solid #ff1744\n}\n.card-border-light[data-v-ade0f17a] {\n    border-top: 4px solid #f8f9fa\n}\n.card-border-dark[data-v-ade0f17a] {\n    border-top: 4px solid #6c757d\n}\n.card-header[data-v-ade0f17a] {\n    border-bottom-width: 1px\n}\n.card-actions a[data-v-ade0f17a] {\n    color: #495057;\n    text-decoration: none\n}\n.card-actions svg[data-v-ade0f17a] {\n    width: 16px;\n    height: 16px\n}\n.card-actions .dropdown[data-v-ade0f17a] {\n    line-height: 1.4\n}\n.card-title[data-v-ade0f17a] {\n    font-weight: 500;\n    margin-top: .1rem\n}\n.card-subtitle[data-v-ade0f17a] {\n    font-weight: 400\n}\n.card-table[data-v-ade0f17a] {\n    margin-bottom: 0\n}\n.card-table tr td[data-v-ade0f17a]:first-child,\n.card-table tr th[data-v-ade0f17a]:first-child {\n    padding-left: 1.25rem\n}\n.card-table tr td[data-v-ade0f17a]:last-child,\n.card-table tr th[data-v-ade0f17a]:last-child {\n    padding-right: 1.25rem\n}\n.card-img-top[data-v-ade0f17a] {\n    height: 100%\n}\n.card[data-v-ade0f17a] {\n    margin-bottom: 1.5rem;\n    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, .025);\n}\n.card[data-v-ade0f17a] {\n    position: relative;\n    display: flex;\n    flex-direction: column;\n    min-width: 0;\n    word-wrap: break-word;\n    background-color: #fff;\n    background-clip: border-box;\n    border: 1px solid #e5e9f2;\n    border-radius: .2rem;\n}\n.card-header[data-v-ade0f17a]:first-child {\n    border-radius: calc(.2rem - 1px) calc(.2rem - 1px) 0 0;\n}\n.card-header[data-v-ade0f17a] {\n    border-bottom-width: 1px;\n}\n.card-header[data-v-ade0f17a] {\n    padding: .75rem 1.25rem;\n    margin-bottom: 0;\n    color: inherit;\n    background-color: #fff;\n    border-bottom: 1px solid #e5e9f2;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n/*.table {*/\n/*    display: grid;*/\n/*    grid-template-columns: 1fr 1fr 1fr 1fr;*/\n/*    gap: 10px;*/\n/*}*/\n\n/*.droppable {*/\n/*    padding: 15px;*/\n/*    border-radius: 10px;*/\n/*    background: #2c3e50;*/\n/*    margin-bottom: 10px;*/\n/*    min-height: 300px;*/\n/*}*/\n\n/*.droppable h4 {*/\n/*    color: white;*/\n/*}*/\n\n/*.draggable {*/\n/*    background: white;*/\n/*    padding: 5px;*/\n/*    border-radius: 5px;*/\n/*    margin-bottom: 5px;*/\n/*    margin-top: 10px;*/\n/*}*/\n\n/*.my_class {*/\n/*    background-color: aqua;*/\n/*}*/\n\n/*.draggable h5 {*/\n/*    margin: 0;*/\n/*}*/\nbody[data-v-ade0f17a] {\n    margin-top: 20px;\n    background: #fafafa\n}\n.card-body.p-3.bg-light[data-v-ade0f17a]{\n    border: 1px solid ghostwhite;\n    margin-top: 3px;\n}\n.card-body.p-3.bg-primary[data-v-ade0f17a]{\n    color:white;\n    margin-top: 3px;\n}\n.card[data-v-ade0f17a] {\n    margin-bottom: 1.5rem;\n    box-shadow: 0 .25rem .5rem rgba(0, 0, 0, .025)\n}\n.card-border-primary[data-v-ade0f17a] {\n    border-top: 4px solid #2979ff\n}\n.card-border-secondary[data-v-ade0f17a] {\n    border-top: 4px solid #efefef\n}\n.card-border-success[data-v-ade0f17a] {\n    border-top: 4px solid #00c853\n}\n.card-border-info[data-v-ade0f17a] {\n    border-top: 4px solid #3d5afe\n}\n.card-border-warning[data-v-ade0f17a] {\n    border-top: 4px solid #ff9100\n}\n.card-border-danger[data-v-ade0f17a] {\n    border-top: 4px solid #ff1744\n}\n.card-border-light[data-v-ade0f17a] {\n    border-top: 4px solid #f8f9fa\n}\n.card-border-dark[data-v-ade0f17a] {\n    border-top: 4px solid #6c757d\n}\n.card-header[data-v-ade0f17a] {\n    border-bottom-width: 1px\n}\n.card-actions a[data-v-ade0f17a] {\n    color: #495057;\n    text-decoration: none\n}\n.card-actions svg[data-v-ade0f17a] {\n    width: 16px;\n    height: 16px\n}\n.card-actions .dropdown[data-v-ade0f17a] {\n    line-height: 1.4\n}\n.card-title[data-v-ade0f17a] {\n    font-weight: 500;\n    margin-top: .1rem\n}\n.card-subtitle[data-v-ade0f17a] {\n    font-weight: 400\n}\n.card-table[data-v-ade0f17a] {\n    margin-bottom: 0\n}\n.card-table tr td[data-v-ade0f17a]:first-child,\n.card-table tr th[data-v-ade0f17a]:first-child {\n    padding-left: 1.25rem\n}\n.card-table tr td[data-v-ade0f17a]:last-child,\n.card-table tr th[data-v-ade0f17a]:last-child {\n    padding-right: 1.25rem\n}\n.card-img-top[data-v-ade0f17a] {\n    height: 100%\n}\n.card[data-v-ade0f17a] {\n    margin-bottom: 1.5rem;\n    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, .025);\n}\n.card[data-v-ade0f17a] {\n    position: relative;\n    display: flex;\n    flex-direction: column;\n    min-width: 0;\n    word-wrap: break-word;\n    background-color: #fff;\n    background-clip: border-box;\n    border: 1px solid #e5e9f2;\n    border-radius: .2rem;\n}\n.card-header[data-v-ade0f17a]:first-child {\n    border-radius: calc(.2rem - 1px) calc(.2rem - 1px) 0 0;\n}\n.card-header[data-v-ade0f17a] {\n    border-bottom-width: 1px;\n}\n.card-header[data-v-ade0f17a] {\n    padding: .75rem 1.25rem;\n    margin-bottom: 0;\n    color: inherit;\n    background-color: #fff;\n    border-bottom: 1px solid #e5e9f2;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

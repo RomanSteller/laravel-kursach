@@ -1,6 +1,6 @@
 <template>
-  <form class="form-signin">
-    <h1 class="h3 mb-3 font-weight-normal">Авторизация</h1>
+  <form class="form-signin mt-5">
+    <h1 class="h3 mb-3 font-weight-normal">Регистрация</h1>
     <input type="text" class="form-control mt-2" placeholder="Login" v-model="regForm.login" required="" autofocus="">
     <input type="text" class="form-control mt-2" placeholder="Name" v-model="regForm.name" required="" autofocus="">
     <input type="email" class="form-control mt-2" placeholder="Email" v-model="regForm.email" required="" autofocus="">
