@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        $regUser = User::where('login', $request['login'])->get();
+        $regUser = User::where('login', $request['login'])->first();
 
         if ($regUser) {
             return response()->json(['message' => 'Такой пользовател уже существует'])->setStatusCode(404);

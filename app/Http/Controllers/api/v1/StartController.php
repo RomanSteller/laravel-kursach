@@ -62,19 +62,19 @@ class StartController extends Controller
     public function newTaskRoom(Request $request){
         $taskRoom = new TaskRoom();
         $taskRoom->room_name = $request['name'];
-        $taskRoom->subject = $request['subject'];
+        $taskRoom->subject = $request['description'];
         $taskRoom->owner_id = $request['id'];
         $taskRoom->save();
 
         $taskRoom->users()->attach($request['id']);
         return response()->json([
             'message' => 'Новая комната успешно создана',
-            'room' => $taskRoom
+            'id' => $taskRoom->id
         ]);
     }
 
     public function getUsers(Request $request){
-        $users = User::where('name','LIKE','%'.$request->keyword.'%')->get();
+        $users = User::where('login','LIKE','%'.$request->keyword.'%')->get();
         return response()->json($users);
     }
 

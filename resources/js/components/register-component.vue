@@ -1,5 +1,8 @@
 <template>
   <form class="form-signin mt-5">
+      <div v-for="error in errors" class="alert alert-danger" role="alert">
+          {{error}}
+      </div>
     <h1 class="h3 mb-3 font-weight-normal">Регистрация</h1>
     <input type="text" class="form-control mt-2" placeholder="Login" v-model="regForm.login" required="" autofocus="">
     <input type="text" class="form-control mt-2" placeholder="Name" v-model="regForm.name" required="" autofocus="">
@@ -31,8 +34,7 @@ export default {
     checkRegError() {
       this.errors.length = 0;
       let emailPatter = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-          cyrillicPattern = /[А-я-\s]/
-
+          cyrillicPattern = /[А-я-\s]/;
       if (this.regForm.email.trim().length > 0) {
         if (!emailPatter.test(this.regForm.email)) {
           this.errors.push('Почта не является валлидной');
@@ -68,9 +70,13 @@ export default {
     createUser() {
       axios.post('api/sanctum/register', this.regForm)
           .then(res => {
-            console.log(res.data)
-
-          })
+            console.log(res.data);
+            this.$router.push('/auth')
+          }).catch(err=>{
+          if(err?.response){
+              this.errors.push('Такой пользователь уже существует')
+          }
+      })
 
     }
   }

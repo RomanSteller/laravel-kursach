@@ -4,7 +4,7 @@
             <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png">
             <div class="message-body">
                 <div class="message-body-inner">
-                    <div class="message-info"><h4> Вы</h4><h5><i class="fa fa-clock-o"></i> 3:45 PM</h5>
+                    <div class="message-info"><h4> Вы</h4><h5><i class="fa fa-clock-o"></i></h5>
                     </div>
                     <hr>
                     <div class="message-text"> {{ message.message }}</div>

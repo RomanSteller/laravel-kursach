@@ -5,7 +5,7 @@
             <main class="content w-75">
                 <div>
                     <div v-if="this.$route.name === 'room'">
-                        <router-link :to="{name:'new-task',params:{'userId':userId,roomId:roomId}}"
+                        <router-link :to="{name:'new-task',params:{'userId':userId,'roomId':roomId}}"
                                      class="btn btn-outline-success mt-1 mb-2">Создать новую задачу
                         </router-link>
                     </div>
@@ -35,7 +35,7 @@
                                          draggable="true"
                                     >
                                         <div :class="[task.executor_id === userId ? 'card-body p-3 bg-primary' : 'card-body p-3 bg-light']">
-                                            <p>{{ post.description}}</p>
+                                            <p>{{ task.description}}</p>
                                             <div class="float-right mt-n1"><img
                                                 src="https://bootdey.com/img/Content/avatar/avatar6.png" width="32"
                                                 height="32" class="rounded-circle" alt="Avatar"></div>

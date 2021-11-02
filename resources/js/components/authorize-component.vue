@@ -1,5 +1,8 @@
 <template>
     <form class="form-signing">
+        <div v-for="error in errors" class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
         <h1 class="h3 mb-3 font-weight-normal">Авторизация</h1>
         <input type="email" class="form-control" v-model="authForm.login" placeholder="Login">
         <input type="password" class="form-control mt-2" v-model="authForm.password" placeholder="Password">
@@ -36,11 +39,27 @@ export default {
                 this.authUser()
             }
         },
-        async authUser() {
-            const res = await axios.post('api/sanctum/token', this.authForm);
-            localStorage.setItem('token', res.data.token);
-            this.$router.push('/');
-            window.location.reload()
+        authUser() {
+
+            axios.post('api/sanctum/token', this.authForm).then(res=>{
+                console.log(res)
+                this.$router.push('/');
+                window.location.reload()
+                localStorage.setItem('token', res.data.token);
+            }).catch(err=>{
+                if(err?.response?.data?.message){
+                    this.errors.push('Не верная связка логина или пароля')
+                    console.log(err.response.data.message)
+                }
+            })
+
+            // const res = await axios.post('api/sanctum/token', this.authForm).catch(err =>{
+            //     console.log(err)
+            // });
+            //
+            // localStorage.setItem('token', res.data.token);
+            // this.$router.push('/');
+            // window.location.reload()
         }
     }
 }
